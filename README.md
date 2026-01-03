@@ -7,6 +7,7 @@ This repository contains a comprehensive automated test suite for the [SauceDemo
 * **Atacan Acar**
 * **Yunus Yedek**
 * **Meral Buse Yalciner**
+* **Haktan Ozkan**
 
 ---
 
