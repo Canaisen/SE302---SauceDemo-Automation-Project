@@ -8,7 +8,7 @@
     "test:headed": "npx playwright test --headed",
     "report": "npx playwright show-report"
   },
-  "author": "Can Aysen, Atacan Acar, Yunus Yedek, Meral Buse Yalciner",
+  "author": "Can Aysen, Atacan Acar, Yunus Yedek, Meral Buse Yalciner, Haktan Ozkan",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.40.0"
