@@ -16,30 +16,30 @@ test.describe('SauceDemo E2E Test Suite', () => {
     });
 
     // Smoke tests
-    test('Smoke 1: Successful Login', async () => {
+    test('Smoke 1: Successful Login', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await expect(inventoryPage.inventoryList).toBeVisible();
     });
 
-    test('Smoke 2: Logout Flow', async () => {
+    test('Smoke 2: Logout Flow', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await inventoryPage.logout();
         await expect(loginPage.loginButton).toBeVisible();
     });
 
-    test('Smoke 3: Add Item to Cart Badge Check', async () => {
+    test('Smoke 3: Add Item to Cart Badge Check', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await inventoryPage.addItemToCart('Sauce Labs Backpack');
         await expect(inventoryPage.cartBadge).toHaveText('1');
     });
 
-    test('Smoke 4: Navigate to Cart Page', async () => {
+    test('Smoke 4: Navigate to Cart Page', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await inventoryPage.cartLink.click();
         await expect(page).toHaveURL(/cart.html/);
     });
 
-    test('Smoke 5: Menu Sidebar Visibility', async () => {
+    test('Smoke 5: Menu Sidebar Visibility', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await inventoryPage.menuButton.click();
         await expect(inventoryPage.logoutLink).toBeVisible();
@@ -48,7 +48,7 @@ test.describe('SauceDemo E2E Test Suite', () => {
     // Normal tests
     
     
-    test('Normal 1: Negative - Missing Postal Code on Checkout', async () => {
+    test('Normal 1: Negative - Missing Postal Code on Checkout', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await inventoryPage.addItemToCart('Sauce Labs Backpack');
         await inventoryPage.cartLink.click();
@@ -60,7 +60,7 @@ test.describe('SauceDemo E2E Test Suite', () => {
     });
 
     
-    test('Normal 2: Positive - Complete Purchase Flow', async () => {
+    test('Normal 2: Positive - Complete Purchase Flow', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await inventoryPage.addItemToCart('Sauce Labs Onesie');
         await inventoryPage.cartLink.click();
@@ -71,7 +71,7 @@ test.describe('SauceDemo E2E Test Suite', () => {
     });
 
     
-    test('Normal 3: Positive - Inventory Reset Check', async () => {
+    test('Normal 3: Positive - Inventory Reset Check', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await inventoryPage.addItemToCart('Sauce Labs Bike Light');
         await inventoryPage.menuButton.click();
@@ -80,19 +80,19 @@ test.describe('SauceDemo E2E Test Suite', () => {
     });
 
     
-    test('Normal 4: Negative - Locked Out User Login', async () => {
+    test('Normal 4: Negative - Locked Out User Login', async ({page}) => {
         await loginPage.login('locked_out_user', 'secret_sauce');
         await expect(loginPage.errorMessage).toContainText('Sorry, this user has been locked out.');
     });
 
     
-    test('Normal 5: Negative - Empty Username Login', async () => {
+    test('Normal 5: Negative - Empty Username Login', async ({page}) => {
         await loginPage.loginButton.click();
         await expect(loginPage.errorMessage).toContainText('Username is required');
     });
 
    
-    test('Normal 6: Functional - Sort Price Low to High', async () => {
+    test('Normal 6: Functional - Sort Price Low to High', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await page.selectOption('.product_sort_container', 'lohi');
         const prices = await page.$$eval('.inventory_item_price', els => 
@@ -102,7 +102,7 @@ test.describe('SauceDemo E2E Test Suite', () => {
     });
 
    
-    test('Normal 7: Functional - Sort Name Z to A', async () => {
+    test('Normal 7: Functional - Sort Name Z to A', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await page.selectOption('.product_sort_container', 'za');
         const firstProduct = await page.locator('.inventory_item_name').first().innerText();
@@ -110,7 +110,7 @@ test.describe('SauceDemo E2E Test Suite', () => {
     });
 
     
-    test('Normal 8: Positive - Multiple Items in Cart', async () => {
+    test('Normal 8: Positive - Multiple Items in Cart', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await inventoryPage.addItemToCart('Sauce Labs Backpack');
         await inventoryPage.addItemToCart('Sauce Labs Bolt T-Shirt');
@@ -118,7 +118,7 @@ test.describe('SauceDemo E2E Test Suite', () => {
     });
 
    
-    test('Normal 9: Functional - Remove Item in Cart Page', async () => {
+    test('Normal 9: Functional - Remove Item in Cart Page', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await inventoryPage.addItemToCart('Sauce Labs Backpack');
         await inventoryPage.cartLink.click();
@@ -127,7 +127,7 @@ test.describe('SauceDemo E2E Test Suite', () => {
     });
 
     
-    test('Normal 10: Functional - Cancel Checkout Flow', async () => {
+    test('Normal 10: Functional - Cancel Checkout Flow', async ({page}) => {
         await loginPage.login('standard_user', 'secret_sauce');
         await inventoryPage.addItemToCart('Sauce Labs Onesie');
         await inventoryPage.cartLink.click();
